@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.9  2003/09/19 09:37:40  dave
+# Bring CVS version into line with old file
+#
 # Revision 1.1  2003/09/19 09:34:43  dave
 # Bit of an overhaul
 #
