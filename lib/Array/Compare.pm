@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.1  2003/09/19 09:34:43  dave
+# Bit of an overhaul
+#
 # Revision 1.7  2002/03/29 17:45:09  dave
 # Test version
 #
@@ -45,16 +48,10 @@
 package Array::Compare;
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD);
+use vars qw($VERSION $AUTOLOAD);
 
 use Carp;
 
-require Exporter;
-
-@ISA = qw(Exporter);
-
-# We're an object, so don't export anything.
-@EXPORT = qw();
 # Grab the version from the RCS tag.
 $VERSION = sprintf "%d.%02d", '$Revision$ ' =~ /(\d+)\.(\d+)/;
 
