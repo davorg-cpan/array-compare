@@ -1,9 +1,4 @@
-use File::Find;
-my @pod;
-BEGIN {
-  find sub { push @pod, $File::Find::name if /\.pm$/ }, 'blib';
-}
-
-use Test::Pod tests => scalar @pod;
-
-pod_file_ok($_) for @pod;
+use Test::More;
+eval "use Test::Pod 1.00";
+plan skip_all => "Test::Pod 1.00 required for testing POD" if $@;
+all_pod_files_ok();
