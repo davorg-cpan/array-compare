@@ -29,13 +29,12 @@ differing columns.</TEXT>
 therefore by installed using the standard Perl method which, in
 brief, goes something like this:</TEXT>
 
-<CODE>   gzip -cd Array-Compare-X.XX.tar.gz | tar xvf -
-   cd Array-Compare-X.XX
-   perl Makefile.PL
-   make
-   make test
-   make install
-</CODE>
+<CODE>gzip -cd Array-Compare-X.XX.tar.gz | tar xvf -
+cd Array-Compare-X.XX
+perl Makefile.PL
+make
+make test
+make install</CODE>
 
 <TEXT>Where X.XX is the version number of the module which you are
 installing.</TEXT>
@@ -52,8 +51,7 @@ file into this directory should also do the trick.</TEXT>
 file. If you install the module using the standard method you should 
 be able to read it by typing</TEXT>
 
-<CODE>   perldoc Array::Compare
-</CODE>
+<CODE>perldoc Array::Compare</CODE>
 
 <TEXT>at a comand prompt.</TEXT>
 </SUBSECTION>
