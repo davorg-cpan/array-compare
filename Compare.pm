@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.6  2002/01/09 11:41:52  dave
+# Small cleanups
+#
 # Revision 1.5  2001/12/09 19:31:47  dave
 # Cleanup.
 #
@@ -45,7 +48,7 @@ use Carp;
 
 require Exporter;
 
-@ISA = qw(Exporter AutoLoader);
+@ISA = qw(Exporter);
 
 # We're an object, so don't export anything.
 @EXPORT = qw();
@@ -156,17 +159,17 @@ sub simple_compare {
   my ($row1, $row2) = @_;
 
   # No point in continuing if the number of elements is different.
-  return 0 unless $self->compare_len(@_);
+  return unless $self->compare_len(@_);
 
   # @check contains the indexes into the two arrays, i.e. the numbers
   # from 0 to one less than the number of elements.
   my @check = 0 .. $#$row1;
 
-  my $caller = (caller(1))[3];
-  my $perm = $caller =~ m/::perm$/;
+  my ($pkg, $caller) = (caller(1))[0, 3];
+  my $perm = $caller eq __PACKAGE__ . "::perm";
 
   # Filter @check so it only contains indexes that should be compared.
-  # N.B. Makes no sense to go this if we are called from 'perm'.
+  # N.B. Makes no sense to do this if we are called from 'perm'.
   unless ($perm) {
     @check = grep {!(exists $self->Skip->{$_}
 		     && $self->Skip->{$_}) } @check
