@@ -1,7 +1,7 @@
 # Before `make install' is performed this script should be runnable with
 # `make test'. After `make install' it should work as `perl test.pl'
 
-use Test::More tests => 24;
+use Test::More tests => 30;
 
 use_ok('Array::Compare');
 
@@ -13,6 +13,7 @@ my @C = @A;
 
 my %skip1 = (6 => 1);
 my %skip2 = (5 => 1);
+my %skip3 = (6 => 0);
 
 # Compare two different arrays - should fail
 ok(not $comp->compare(\@A, \@B));
@@ -23,6 +24,11 @@ ok($comp->compare(\@A, \@B));
 
 # compare two different arrays but ignore non-differing column - should fail
 $comp->Skip(\%skip2);
+ok(not $comp->compare(\@A, \@B));
+
+# Compare two different arrays but ignore differing column (badly) 
+# - should fail as skip value is 0
+$comp->Skip(\%skip3);
 ok(not $comp->compare(\@A, \@B));
 
 # Change separator and compare two identical arrays - should succeed
@@ -45,6 +51,8 @@ ok($@);
 
 # Switch to full comparison
 $comp->DefFull(1);
+ok($comp->DefFull);
+$comp->Skip({});
 
 # @A and @B differ in column 6
 # Array context
@@ -85,6 +93,9 @@ $comp->DefFull(1);
 @diffs = $comp->compare(\@D, \@E);
 ok(@diffs == 5);
 
+@diffs = $comp->compare(\@E, \@D);
+ok(@diffs == 5);
+
 $diffs = $comp->compare(\@D, \@E);
 ok($diffs == 5);
 
@@ -100,12 +111,18 @@ ok(not $comp->perm(\@F, \@I));
 
 my @J = ('array with', 'white space');
 my @K = ('array  with', 'white	space');
-$comp->DefFull(0);
-ok(not $comp->compare(\@J, \@K));
+ok($comp->compare(\@J, \@K));
 
 # Turn off whitespace
 $comp->WhiteSpace(0);
+ok(not $comp->compare(\@J, \@K));
+
+$comp->DefFull(0);
 ok($comp->compare(\@J, \@K));
+
+# Turn on whitespace
+$comp->WhiteSpace(1);
+ok(not $comp->compare(\@J, \@K));
 
 my @L = qw(ArRay WiTh DiFfErEnT cAsEs);
 my @M = qw(aRrAY wItH dIfFeReNt CaSeS);
@@ -114,3 +131,6 @@ ok(not $comp->compare(\@L, \@M));
 # Turn of case sensitivity
 $comp->Case(0);
 ok($comp->compare(\@L, \@M));
+
+$comp->DefFull(1);
+ok(not $comp->compare(\@L, \@M));

@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.11  2004/10/23 08:11:32  dave
+# Improved test coverage
+#
 # Revision 1.10  2004/10/22 20:32:48  dave
 # Improved docs for full comparison
 #
@@ -98,11 +101,11 @@ my %_defaults = (Sep => '^G',
 # defaults given above.
 #
 sub new {
-  my $thing = shift;
+  my $class = shift;
 
   my $self = {%_defaults, @_};
 
-  bless $self, ref($thing) || $thing;
+  bless $self, $class;
 
   return $self;
 }
