@@ -14,6 +14,9 @@
 # $Id$
 #
 # $Log$
+# Revision 1.7  2002/03/29 17:45:09  dave
+# Test version
+#
 # Revision 1.6  2002/01/09 11:41:52  dave
 # Small cleanups
 #
@@ -314,7 +317,6 @@ sub DESTROY { }
 
 1;
 __END__
-# Below is the stub of documentation for your module. You better edit it!
 
 =head1 NAME
 
