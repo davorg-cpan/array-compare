@@ -41,7 +41,7 @@ this:
 
   my $comp = Array::Compare->new;
 
-  if ($comp->compare(\@arr1, \@arr2) {
+  if ($comp->compare(\@arr1, \@arr2)) {
     print "Arrays are the same\n";
   } else {
     print "Arrays are different\n";
@@ -504,6 +504,9 @@ under the same terms as Perl itself.
 
 #
 # $Log$
+# Revision 1.13  2005/09/21 09:23:40  dave
+# Documentation fix
+#
 # Revision 1.12  2005/03/01 09:05:33  dave
 # Changes to pass Pod::Coverage tests (and, hence, increase kwalitee)
 #
