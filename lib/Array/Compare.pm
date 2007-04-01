@@ -183,7 +183,7 @@ use vars qw($VERSION $AUTOLOAD);
 
 use Carp;
 
-$VERSION = sprintf "%d.%02d", '$Revision$ ' =~ /(\d+)\.(\d+)/;
+$VERSION = 1.14;
 
 my %_defaults = (Sep => '^G',
 		 WhiteSpace => 1,
