@@ -4,7 +4,7 @@ my $build = new Module::Build(module_name => 'Array::Compare',
 			      requires => {
 					   perl           => '5.6.0',
 					  },
-                              create_makefile_pl => 'passthrough'
+                              create_makefile_pl => 'traditional',
 			     );
 $build->create_build_script;
 
