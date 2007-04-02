@@ -6,5 +6,6 @@ my $build = new Module::Build(module_name => 'Array::Compare',
 					  },
                               create_makefile_pl => 'traditional',
 			     );
+
 $build->create_build_script;
 
