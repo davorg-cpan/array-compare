@@ -185,7 +185,7 @@ our ($VERSION, $AUTOLOAD);
 
 use Carp;
 
-$VERSION = 1.14;
+$VERSION = 1.15;
 
 my %_defaults = (Sep => '^G',
 		 WhiteSpace => 1,
