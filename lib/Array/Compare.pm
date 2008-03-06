@@ -178,8 +178,10 @@ but C<Skip> is ignored for, hopefully, obvious reasons.
 
 package Array::Compare;
 
+require 5.006_000;
 use strict;
-use vars qw($VERSION $AUTOLOAD);
+use warnings;
+our ($VERSION, $AUTOLOAD);
 
 use Carp;
 
