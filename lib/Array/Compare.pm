@@ -495,7 +495,7 @@ Dave Cross <dave@mag-sol.com>
 
 perl(1).
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
 Copyright (C) 2000-2005, Magnum Solutions Ltd.  All Rights Reserved.
 
@@ -503,51 +503,3 @@ This script is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself. 
 
 =cut
-
-#
-# $Log$
-# Revision 1.13  2005/09/21 09:23:40  dave
-# Documentation fix
-#
-# Revision 1.12  2005/03/01 09:05:33  dave
-# Changes to pass Pod::Coverage tests (and, hence, increase kwalitee)
-#
-# Revision 1.11  2004/10/23 08:11:32  dave
-# Improved test coverage
-#
-# Revision 1.10  2004/10/22 20:32:48  dave
-# Improved docs for full comparison
-#
-# Revision 1.9  2003/09/19 09:37:40  dave
-# Bring CVS version into line with old file
-#
-# Revision 1.1  2003/09/19 09:34:43  dave
-# Bit of an overhaul
-#
-# Revision 1.7  2002/03/29 17:45:09  dave
-# Test version
-#
-# Revision 1.6  2002/01/09 11:41:52  dave
-# Small cleanups
-#
-# Revision 1.5  2001/12/09 19:31:47  dave
-# Cleanup.
-#
-# Revision 1.4  2001/06/04 20:47:01  dave
-# RCS Import
-#
-# Revision 1.3  2001/02/26 13:34:41  dave
-# Added case insensitivity.
-#
-# Revision 1.2  2000/06/04 17:43:14  dave
-# Renamed 'manifest' and 'readme' to 'MANIFEST' and 'README'.
-# Added header info.
-#
-# Revision 1.1.1.1  2000/06/04 17:40:19  dave
-# CVS import
-#
-# Revision 0.2  00/05/13  14:23:48  14:23:48  dave (Dave Cross)
-# Added 'perm' method.
-# Revision 0.1  00/04/25  13:33:55  13:33:55  dave (Dave Cross)
-# Initial version.
-#
