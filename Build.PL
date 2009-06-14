@@ -1,6 +1,5 @@
 use Module::Build;
 my $build = Module::Build->new(
-        dist_version => '1.16',
 	module_name => 'Array::Compare',
 	license => 'perl',
 	requires => {
