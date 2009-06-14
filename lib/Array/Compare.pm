@@ -185,7 +185,7 @@ our ($VERSION, $AUTOLOAD);
 
 use Carp;
 
-$VERSION = 1.15;
+$VERSION = 1.17;
 
 my %_defaults = (Sep => '^G',
 		 WhiteSpace => 1,
@@ -325,6 +325,7 @@ sub simple_compare {
   my @check = 0 .. $#$row1;
 
   my ($pkg, $caller) = (caller(1))[0, 3];
+  $caller = '' unless defined $caller;
   my $perm = $caller eq __PACKAGE__ . "::perm";
 
   # Filter @check so it only contains indexes that should be compared.
