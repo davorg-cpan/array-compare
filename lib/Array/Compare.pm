@@ -183,15 +183,16 @@ use strict;
 use warnings;
 our ($VERSION, $AUTOLOAD);
 
+use Moose;
 use Carp;
 
-$VERSION = 1.18;
+$VERSION = 2.00;
 
-my %_defaults = (Sep => '^G',
-		 WhiteSpace => 1,
-                 Case => 1,
-		 Skip => {},
-		 DefFull => 0);
+has Sep        => ( is => 'rw', isa => 'Str',     default => '^G' );
+has WhiteSpace => ( is => 'rw', isa => 'Bool',    default => 1 );
+has Case       => ( is => 'rw', isa => 'Bool',    default => 1 );
+has DefFull    => ( is => 'rw', isa => 'Bool',    default => 0 );
+has Skip       => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
 
 =head2 new [ %OPTIONS ]
 
@@ -236,16 +237,6 @@ comparison).
 =back
 
 =cut
-
-sub new {
-  my $class = shift;
-
-  my $self = {%_defaults, @_};
-
-  bless $self, $class;
-
-  return $self;
-}
 
 #
 # Utility function to check the arguments to any of the comparison
@@ -449,41 +440,8 @@ sub perm {
   return $self->simple_compare([sort @{$_[0]}], [sort @{$_[1]}]);
 }
 
-#
-# Attempt to be clever with object attributes.
-# Each object attribute is always accessed using an access method.
-# None of these access methods exist in the object code.
-# If an unknown method is called then the AUTOLOAD method is called
-# in its place with the same parameters and the variable $AUTOLOAD
-# set to the name of the unknown method.
-#
-# In this function we work out which method has been called and
-# simulate it by returning the correct attribute value (and setting
-# it to a new value if the method was passed a new value to use).
-#
-# We're also a little cleverer than that as we create a new method on
-# the fly so that the next time we call the missing method it has
-# magically sprung into existance, thereby avoiding the overhead of
-# calling AUTOLOAD more than once for each method called.
-#
-sub AUTOLOAD {
-  no strict 'refs';
-  my ($self, $val) = @_;
-  my ($name) = $AUTOLOAD =~ m/.*::(\w*)/;
-
-  *{$AUTOLOAD} = sub { return @_ > 1 ?
-			 $_[0]->{$name} = $_[1] :
-			   $_[0]->{$name}};
-
-  return defined $val ? $self->{$name} = $val : $self->{$name};
-}
-
-#
-# One (small) downside of the AUTOLOAD trick, is that we need to
-# explicitly define a DESTROY method to prevent Perl from passing
-# those calls to AUTOLOAD. In this case we don't need to do anything.
-#
-sub DESTROY { }
+no Moose;
+__PACKAGE__->meta->make_immutable;
 
 1;
 __END__
