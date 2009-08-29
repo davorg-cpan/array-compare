@@ -186,7 +186,7 @@ our ($VERSION, $AUTOLOAD);
 use Moose;
 use Carp;
 
-$VERSION = '2.00';
+$VERSION = '2.01';
 
 has Sep        => ( is => 'rw', isa => 'Str',     default => '^G' );
 has WhiteSpace => ( is => 'rw', isa => 'Bool',    default => 1 );
