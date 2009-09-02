@@ -212,7 +212,7 @@ Default is '^G'.
 =item WhiteSpace
 
 Flag that indicates whether or not whitespace is significant in the
-comparison. If this value is true then all multiple whitespace characters
+comparison. If this value is false then all multiple whitespace characters
 are changed into a single space before the comparison takes place. Default
 is 1 (whitespace is significant).
 
