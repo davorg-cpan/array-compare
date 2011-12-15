@@ -406,6 +406,15 @@ sub full_compare {
     next if keys %{$self->Skip} && $self->Skip->{$_};
 
     my ($val1, $val2) = ($arr1->[$_], $arr2->[$_]);
+
+    next unless defined $val1 or defined $val2;
+
+    if ((defined $val1 and not defined $val2)
+      or (defined $val2 and not defined $val1)) {
+      push @diffs, $_;
+      next;
+    }
+
     unless ($self->WhiteSpace) {
       $val1 =~ s/\s+/ /g;
       $val2 =~ s/\s+/ /g;
