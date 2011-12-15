@@ -186,7 +186,7 @@ our ($VERSION, $AUTOLOAD);
 use Moose;
 use Carp;
 
-$VERSION = '2.01';
+$VERSION = '2.02';
 
 has Sep        => ( is => 'rw', isa => 'Str',     default => '^G' );
 has WhiteSpace => ( is => 'rw', isa => 'Bool',    default => 1 );
@@ -332,8 +332,8 @@ sub simple_compare {
   # character. Hopefully we can then just do a string comparison.
   # Note: this makes the function liable to errors if your arrays
   # contain the separator character.
-  my $str1 = join($self->Sep, @{$row1}[@check]);
-  my $str2 = join($self->Sep, @{$row2}[@check]);
+  my $str1 = join($self->Sep, map { defined $_ ? $_ : '' } @{$row1}[@check]);
+  my $str2 = join($self->Sep, map { defined $_ ? $_ : '' } @{$row2}[@check]);
 
   # If whitespace isn't significant, collapse it
   unless ($self->WhiteSpace) {

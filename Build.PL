@@ -7,6 +7,9 @@ my $build = Module::Build->new(
 		Carp    => 0,
 		Moose	=> 0,
 	},
+        build_requires => {
+                Test::NoWarnings => 0,
+        },
 	build_recommends => {
 		Test::Pod           => 0,
 		Test::Pod::Coverage => 0,
