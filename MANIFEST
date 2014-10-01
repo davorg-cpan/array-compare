@@ -8,3 +8,4 @@ README
 t/pod.t
 t/test.t
 t/pod_coverage.t
+META.json
