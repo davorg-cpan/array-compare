@@ -187,7 +187,7 @@ use Moo;
 use Types::Standard qw(Str Bool HashRef);
 use Carp;
 
-$VERSION = '2.10';
+$VERSION = '2.11';
 
 has Sep        => ( is => 'rw', isa => Str,     default => '^G' );
 has WhiteSpace => ( is => 'rw', isa => Bool,    default => 1 );
@@ -449,9 +449,6 @@ sub perm {
 
   return $self->simple_compare([sort @{$_[0]}], [sort @{$_[1]}]);
 }
-
-no Moose;
-__PACKAGE__->meta->make_immutable;
 
 1;
 __END__
