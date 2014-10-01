@@ -183,16 +183,17 @@ use strict;
 use warnings;
 our ($VERSION, $AUTOLOAD);
 
-use Moose;
+use Moo;
+use Types::Standard qw(Str Bool HashRef);
 use Carp;
 
-$VERSION = '2.02';
+$VERSION = '2.10';
 
-has Sep        => ( is => 'rw', isa => 'Str',     default => '^G' );
-has WhiteSpace => ( is => 'rw', isa => 'Bool',    default => 1 );
-has Case       => ( is => 'rw', isa => 'Bool',    default => 1 );
-has DefFull    => ( is => 'rw', isa => 'Bool',    default => 0 );
-has Skip       => ( is => 'rw', isa => 'HashRef', default => sub { {} } );
+has Sep        => ( is => 'rw', isa => Str,     default => '^G' );
+has WhiteSpace => ( is => 'rw', isa => Bool,    default => 1 );
+has Case       => ( is => 'rw', isa => Bool,    default => 1 );
+has DefFull    => ( is => 'rw', isa => Bool,    default => 0 );
+has Skip       => ( is => 'rw', isa => HashRef, default => sub { {} } );
 
 =head2 new [ %OPTIONS ]
 
