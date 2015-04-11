@@ -1,0 +1,12 @@
+Array-Compare-*.tar.gz
+Array-Compare/
+Build
+Changes
+META.json
+META.yml
+MYMETA.json
+MYMETA.yml
+Makefile.PL
+_build/
+blib/
+cover_db/
