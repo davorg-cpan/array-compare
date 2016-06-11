@@ -15,6 +15,11 @@ my $build = Module::Build->new(
         Test::Pod           => 0,
         Test::Pod::Coverage => 0,
     },
+    meta_merge => {
+        resources => {
+            repository => 'https://github.com/davorg/array-compare',
+        },
+    },
     create_makefile_pl => 'traditional',
 );
 
