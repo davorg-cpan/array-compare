@@ -16,8 +16,13 @@ my $build = Module::Build->new(
         Test::Pod::Coverage => 0,
     },
     meta_merge => {
-        resources => {
-            repository => 'https://github.com/davorg/array-compare',
+        'meta-spec' => { version => 2 },
+        resources  => {
+            repository => {
+                type => 'git',
+                url  => 'https://github.com/davorg/audiofile-info.git',
+                web  => 'https://github.com/davorg/audiofile-info',
+            },
         },
     },
     create_makefile_pl => 'traditional',
