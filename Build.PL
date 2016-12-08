@@ -20,8 +20,8 @@ my $build = Module::Build->new(
         resources  => {
             repository => {
                 type => 'git',
-                url  => 'https://github.com/davorg/audiofile-info.git',
-                web  => 'https://github.com/davorg/audiofile-info',
+                url  => 'https://github.com/davorg/array-compare.git',
+                web  => 'https://github.com/davorg/array-compare',
             },
         },
     },
@@ -29,4 +29,3 @@ my $build = Module::Build->new(
 );
 
 $build->create_build_script;
-
