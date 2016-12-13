@@ -1,3 +1,7 @@
+3.0.0 2016-12-13
+
+ - New version to get round dubious decisions in Perl toolchain
+
 2.12.2 2016-12-08
 
  - Fixing the idiocy in the previous version
