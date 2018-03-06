@@ -323,9 +323,8 @@ sub simple_compare {
   # Filter @check so it only contains indexes that should be compared.
   # N.B. Makes no sense to do this if we are called from 'perm'.
   unless ($perm) {
-    @check = grep {!(exists $self->Skip->{$_}
-		     && $self->Skip->{$_}) } @check
-		       if keys %{$self->Skip};
+    @check = grep {!(exists $self->Skip->{$_} && $self->Skip->{$_}) } @check
+      if keys %{$self->Skip};
   }
 
   # Build two strings by taking array slices containing only the columns
@@ -389,9 +388,9 @@ sub full_compare {
     if (wantarray) {
       my ($max, $min);
       if ($#{$row1} > $#{$row2}) {
-	($max, $min) = ($#{$row1}, $#{$row2} + 1);
+        ($max, $min) = ($#{$row1}, $#{$row2} + 1);
       } else {
-	($max, $min) = ($#{$row2}, $#{$row1} + 1);
+        ($max, $min) = ($#{$row2}, $#{$row1} + 1);
       }
       return ($min .. $max);
     } else {
