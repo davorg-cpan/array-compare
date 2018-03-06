@@ -25,7 +25,7 @@ ok($comp->compare(\@A, \@B));
 $comp->Skip(\%skip2);
 ok(not $comp->compare(\@A, \@B));
 
-# Compare two different arrays but ignore differing column (badly) 
+# Compare two different arrays but ignore differing column (badly)
 # - should fail as skip value is 0
 $comp->Skip(\%skip3);
 ok(not $comp->compare(\@A, \@B));

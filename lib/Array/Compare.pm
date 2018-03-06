@@ -82,9 +82,9 @@ or by altering an existing object:
 
   $comp->WhiteSpace(0);
 
-You can also control whether or not the case of the data is significant 
-in the comparison. The default is that the case of data is taken into 
-account. This can be changed in the standard ways when creating a new 
+You can also control whether or not the case of the data is significant
+in the comparison. The default is that the case of data is taken into
+account. This can be changed in the standard ways when creating a new
 comparator object:
 
   my $comp = Array::Compare->new(Case => 0);
@@ -169,12 +169,12 @@ they contain the same elements but in a different order.
     print "Nope. Arrays are completely different\n";
   }
 
-In this case the values of C<WhiteSpace> and C<Case> are still used, 
+In this case the values of C<WhiteSpace> and C<Case> are still used,
 but C<Skip> is ignored for, hopefully, obvious reasons.
 
 =head1 METHODS
 
-=cut 
+=cut
 
 package Array::Compare;
 
@@ -466,6 +466,6 @@ perl(1).
 Copyright (C) 2000-2005, Magnum Solutions Ltd.  All Rights Reserved.
 
 This script is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself. 
+under the same terms as Perl itself.
 
 =cut
