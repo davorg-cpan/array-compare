@@ -110,7 +110,7 @@ ok($comp->perm(\@F, \@H));
 ok(not $comp->perm(\@F, \@I));
 
 my @J = ('array with', 'white space');
-my @K = ('array  with', 'white	space');
+my @K = ('array  with', "white\tspace");
 ok($comp->compare(\@J, \@K));
 
 # Turn off whitespace
