@@ -62,7 +62,7 @@ character, either by passing and alternative to the C<new> function
 
   my $comp = Array::Compare->new(Sep => '|');
 
-or by changing the seperator for an existing comparator object
+or by changing the separator for an existing comparator object
 
   $comp->Sep('|');
 
@@ -99,7 +99,7 @@ a full comparison which returns a list containing the indexes of elements
 which differ between the two arrays. If the arrays are the same it returns
 an empty list. In scalar context the full comparison returns the length of
 this list (i.e. the number of elements that differ). You can access the full
-comparision in two ways. Firstly, there is a C<DefFull> attribute. If this
+comparison in two ways. Firstly, there is a C<DefFull> attribute. If this
 is C<true> then a full comparison if carried out whenever the C<compare>
 method is called.
 
