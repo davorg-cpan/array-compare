@@ -178,7 +178,7 @@ but C<Skip> is ignored for, hopefully, obvious reasons.
 
 package Array::Compare;
 
-require 5.006_000;
+require 5.010_000;
 use strict;
 use warnings;
 our ($VERSION, $AUTOLOAD);
