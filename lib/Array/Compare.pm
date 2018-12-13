@@ -58,7 +58,7 @@ your array data contains C<^G> characters as it is possible that
 two different arrays can be converted to the same string.
 
 To avoid this, it is possible to override the default separator
-character, either by passing and alternative to the C<new> function
+character, either by passing an alternative to the C<new> function
 
   my $comp = Array::Compare->new(Sep => '|');
 
@@ -73,7 +73,7 @@ You can also control whether or not whitespace within the elements of
 the arrays should be considered significant when making the comparison.
 The default is that all whitespace is significant. The alternative is
 for all consecutive white space characters to be converted to a single
-space for the pruposes of the comparison. Again, this can be turned on
+space for the purposes of the comparison. Again, this can be turned on
 when creating a comparator object:
 
   my $comp = Array::Compare->new(WhiteSpace => 0);
@@ -100,7 +100,7 @@ which differ between the two arrays. If the arrays are the same it returns
 an empty list. In scalar context the full comparison returns the length of
 this list (i.e. the number of elements that differ). You can access the full
 comparison in two ways. Firstly, there is a C<DefFull> attribute. If this
-is C<true> then a full comparison if carried out whenever the C<compare>
+is C<true> then a full comparison is carried out whenever the C<compare>
 method is called.
 
   my $comp = Array::Compare->new(DefFull => 1);
