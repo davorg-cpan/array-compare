@@ -155,10 +155,9 @@ or:
   my %skip = (1 => 1, 2 => 2);
   $comp->Skip(\%skip);
 
-To reset the comparator so that no longer skips elements, set the skip
-hash to an empty hash.
+To reset the comparator so that no longer skips elements, call NoSkip().
 
-  $comp->Skip({});
+  $comp->NoSkip();
 
 You can also check to see if one array is a permutation of another, i.e.
 they contain the same elements but in a different order.
