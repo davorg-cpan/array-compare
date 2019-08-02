@@ -155,10 +155,9 @@ or:
   my %skip = (1 => 1, 2 => 2);
   $comp->Skip(\%skip);
 
-To reset the comparator so that no longer skips elements, set the skip
-hash to an empty hash.
+To reset the comparator so that no longer skips elements, call NoSkip().
 
-  $comp->Skip({});
+  $comp->NoSkip();
 
 You can also check to see if one array is a permutation of another, i.e.
 they contain the same elements but in a different order.
@@ -227,6 +226,18 @@ in the comparison. Default is 1 (case is significant).
 a reference to a hash which contains the numbers of any columns that should
 be skipped in the comparison. Default is an empty hash (all columns are
 significant).
+
+=item NoSkip
+
+Reset skipped column details. It assigns {} to the attribute C<Skip>.
+
+=cut
+
+sub NoSkip {
+    my $self = shift;
+
+    $self->{Skip} = {};
+}
 
 =item DefFull
 
