@@ -236,7 +236,7 @@ Reset skipped column details. It assigns {} to the attribute C<Skip>.
 sub NoSkip {
     my $self = shift;
 
-    $self->{Skip} = {};
+    $self->Skip({});
 }
 
 =item DefFull
