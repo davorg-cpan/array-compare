@@ -374,7 +374,7 @@ Do a full comparison between two arrays.
 
 Checks each individual column. In scalar context returns the number
 of columns that differ (zero if the arrays are the same). In list
-context returns an list containing the indexes of the columns that
+context returns a list containing the indexes of the columns that
 differ (an empty list if the arrays are the same).
 
 Uses the values of 'Sep' and 'WhiteSpace' to influence the comparison.
