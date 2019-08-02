@@ -228,6 +228,18 @@ a reference to a hash which contains the numbers of any columns that should
 be skipped in the comparison. Default is an empty hash (all columns are
 significant).
 
+=item NoSkip
+
+Reset skipped column details. It assigns {} to the attribute C<Skip>.
+
+=cut
+
+sub NoSkip {
+    my $self = shift;
+
+    $self->{Skip} = {};
+}
+
 =item DefFull
 
 Flag which indicates whether the default comparison is simple (just returns
