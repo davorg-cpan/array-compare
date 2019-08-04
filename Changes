@@ -1,3 +1,7 @@
+3.0.2 2018-08-04
+ - Introduced new method NoSkip().
+ - Applied some pod typo fix.
+
 3.0.1 2018-03-24
 
  - Various code fixes recommended by kritika.io
