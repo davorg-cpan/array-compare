@@ -164,7 +164,7 @@ they contain the same elements but in a different order.
 
   if ($comp->perm(\@a, \@b) {
     print "Arrays are perms\n";
-  else {
+  } else {
     print "Nope. Arrays are completely different\n";
   }
 
