@@ -1,6 +1,4 @@
-#
-# $Id$
-#
+use compat::perl7;
 
 =head1 NAME
 
