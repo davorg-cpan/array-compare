@@ -1,3 +1,4 @@
+use compat::perl7;
 use warnings;
 use strict;
 use Test::More 'no_plan';
