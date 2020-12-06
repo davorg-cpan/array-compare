@@ -1,4 +1,9 @@
-3.0.4 2020-12-06
+3.0.7 2020-12-06
+
+ - Actually release the previous fix
+ - Add bugtracker info
+
+3.0.6 2020-12-06
 
  - Fix documentation typo
    (Thanks to Mohammed Anwar)
