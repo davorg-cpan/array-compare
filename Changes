@@ -1,3 +1,8 @@
+3.0.4 2020-12-06
+
+ - Fix documentation typo
+   (Thanks to Mohammed Anwar)
+
 3.0.3 2019-08-12
 
  - Added NoSkip method to clear Skip setting

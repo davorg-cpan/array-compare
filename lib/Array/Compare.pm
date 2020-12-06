@@ -186,7 +186,7 @@ use Moo;
 use Types::Standard qw(Str Bool HashRef);
 use Carp;
 
-$VERSION = '3.0.3';
+$VERSION = '3.0.7';
 
 has Sep        => ( is => 'rw', isa => Str,     default => '^G' );
 has WhiteSpace => ( is => 'rw', isa => Bool,    default => 1 );
