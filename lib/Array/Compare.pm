@@ -1,3 +1,172 @@
+use Object::Pad;
+
+class Array::Compare {
+
+  our ($VERSION, $AUTOLOAD);
+
+  use Carp;
+
+  has $Sep        :param :accessor = '^G';
+  has $WhiteSpace :param :accessor = 1;
+  has $Case       :param :accessor = 1;
+  has $DefFull    :param :accessor = 0;
+  has $Skip       :param :accessor = {};
+
+  method NoSkip {
+    $Skip = {};
+  }
+
+#
+# Utility function to check the arguments to any of the comparison
+# function. Ensures that there are two arguments and that they are
+# both arrays.
+#
+  method _check_args($a1, $a2) {
+    my @errs;
+
+    push @errs, 'Must compare two arrays.' unless defined $a1 and defined $a2;;
+    push @errs, 'Argument 1 is not an array' unless ref($a1) eq 'ARRAY';
+    push @errs, 'Argument 2 is not an array' unless ref($a2) eq 'ARRAY';
+
+    croak join "\n", @errs if @errs;
+
+    return;
+  }
+
+  method compare_len($a1, $a2) {
+
+    $self->_check_args($a1, $a2);
+
+    return @{$a1} == @{$a2};
+  }
+
+  method different_len($a1, $a2) {
+    return ! $self->compare_len($a1, $a2);
+  }
+
+  method compare($a1, $a2) {
+    if ($DefFull) {
+      return $self->full_compare($a1, $a2);
+    } else {
+      return $self->simple_compare($a1, $a2);
+    }
+  }
+
+  method simple_compare($a1, $a2) {
+    $self->_check_args($a1, $a2);
+
+    # No point in continuing if the number of elements is different.
+    return unless $self->compare_len($a1, $a2);
+
+    # @check contains the indexes into the two arrays, i.e. the numbers
+    # from 0 to one less than the number of elements.
+    my @check = 0 .. $#$a1;
+
+    my ($pkg, $caller) = (caller(1))[0, 3];
+    $caller = '' unless defined $caller;
+    my $perm = $caller eq __PACKAGE__ . "::perm";
+
+    # Filter @check so it only contains indexes that should be compared.
+    # N.B. Makes no sense to do this if we are called from 'perm'.
+    unless ($perm) {
+      @check = grep {!(exists $Skip->{$_} && $Skip->{$_}) } @check
+        if keys %{$Skip};
+    }
+
+    # Build two strings by taking array slices containing only the columns
+    # that we shouldn't skip and joining those array slices using the Sep
+    # character. Hopefully we can then just do a string comparison.
+    # Note: this makes the function liable to errors if your arrays
+    # contain the separator character.
+    my $str1 = join($Sep, map { defined $_ ? $_ : '' } @{$a1}[@check]);
+    my $str2 = join($Sep, map { defined $_ ? $_ : '' } @{$a2}[@check]);
+
+    # If whitespace isn't significant, collapse it
+    unless ($WhiteSpace) {
+      $str1 =~ s/\s+/ /g;
+      $str2 =~ s/\s+/ /g;
+    }
+
+    # If case isn't significant, change to lower case
+    unless ($Case) {
+      $str1 = lc $str1;
+      $str2 = lc $str2;
+    }
+
+    return $str1 eq $str2;
+  }
+
+  method full_compare($a1, $a2) {
+    $self->_check_args($a1, $a2);
+
+    # No point in continuing if the number of elements is different.
+    # Because of the expected return value from this function we can't
+    # just say 'the arrays are different'. We need to do some work to
+    # calculate a meaningful return value.
+    # If we've been called in array context we return a list containing
+    # the number of the columns that appear in the longer list and aren't
+    # in the shorter list. If we've been called in scalar context we
+    # return the difference in the lengths of the two lists.
+    if ($self->different_len($a1, $a2)) {
+      return $self->_different_len_returns($a1, $a2);
+    }
+
+    my @diffs = ();
+
+    foreach (0 .. $#{$a1}) {
+      next if keys %{$Skip} && $Skip->{$_};
+
+      my ($val1, $val2) = ($a1->[$_], $a2->[$_]);
+
+      if (not defined $val1 or not defined $val2) {
+        push @diffs, $_ if $self->_defined_diff($val1, $val2);
+        next;
+      }
+
+      unless ($WhiteSpace) {
+        $val1 =~ s/\s+/ /g;
+        $val2 =~ s/\s+/ /g;
+      }
+
+      unless ($Case) {
+        $val1 = lc $val1;
+        $val2 = lc $val2;
+      }
+
+      push @diffs, $_ unless $val1 eq $val2;
+    }
+
+    return wantarray ? @diffs : scalar @diffs;
+  }
+
+  method _different_len_returns($a1, $a2) {
+
+    if (wantarray) {
+      if ($#{$a1} > $#{$a2}) {
+        return ( $#{$a2} + 1 .. $#{$a1} );
+      } else {
+        return ( $#{$a1} + 1 .. $#{$a2} );
+      }
+    } else {
+      return abs(@{$a1} - @{$a2});
+    }
+  }
+
+  method _defined_diff($val1, $val2) {
+    return   if not defined $val1 and not defined $val2;
+    return 1 if     defined $val1 and not defined $val2;
+    return 1 if not defined $val1 and     defined $val2;
+  }
+
+  method perm($a1, $a2) {
+    return $self->simple_compare([sort @{$a1}], [sort @{$a2}]);
+  }
+
+}
+
+1;
+__END__
+
 =head1 NAME
 
 Array::Compare - Perl extension for comparing arrays.
@@ -169,27 +338,6 @@ but C<Skip> is ignored for, hopefully, obvious reasons.
 
 =head1 METHODS
 
-=cut
-
-package Array::Compare;
-
-require 5.010_000;
-use strict;
-use warnings;
-our ($VERSION, $AUTOLOAD);
-
-use Moo;
-use Types::Standard qw(Str Bool HashRef);
-use Carp;
-
-$VERSION = '3.0.8';
-
-has Sep        => ( is => 'rw', isa => Str,     default => '^G' );
-has WhiteSpace => ( is => 'rw', isa => Bool,    default => 1 );
-has Case       => ( is => 'rw', isa => Bool,    default => 1 );
-has DefFull    => ( is => 'rw', isa => Bool,    default => 0 );
-has Skip       => ( is => 'rw', isa => HashRef, default => sub { {} } );
-
 =head2 new [ %OPTIONS ]
 
 Constructs a new comparison object.
@@ -227,14 +375,6 @@ significant).
 
 Reset skipped column details. It assigns {} to the attribute C<Skip>.
 
-=cut
-
-sub NoSkip {
-    my $self = shift;
-
-    $self->Skip({});
-}
-
 =item DefFull
 
 Flag which indicates whether the default comparison is simple (just returns
@@ -244,54 +384,17 @@ comparison).
 
 =back
 
-=cut
-
-#
-# Utility function to check the arguments to any of the comparison
-# function. Ensures that there are two arguments and that they are
-# both arrays.
-#
-sub _check_args {
-  my $self = shift;
-
-  my @errs;
-
-  push @errs, 'Must compare two arrays.' unless @_ == 2;
-  push @errs, 'Argument 1 is not an array' unless ref($_[0]) eq 'ARRAY';
-  push @errs, 'Argument 2 is not an array' unless ref($_[1]) eq 'ARRAY';
-
-  croak join "\n", @errs if @errs;
-
-  return;
-}
 
 =head2 compare_len \@ARR1, \@ARR2
 
 Very simple comparison. Just checks the lengths of the arrays are
 the same.
 
-=cut
-
-sub compare_len {
-  my $self = shift;
-
-  $self->_check_args(@_);
-
-  return @{$_[0]} == @{$_[1]};
-}
-
 =head2 different_len \@ARR1, \@ARR2
 
 Passed two arrays and returns true if they are of different lengths.
 
 This is just the inverse of C<compare_len> (which is badly named).
-
-=cut
-
-sub different_len {
-  my $self = shift;
-  return ! $self->compare_len(@_);
-}
 
 =head2 compare \@ARR1, \@ARR2
 
@@ -303,18 +406,6 @@ and L<full_compare> for details.
 Uses the value of DefFull to determine which comparison routine
 to use.
 
-=cut
-
-sub compare {
-  my $self = shift;
-
-  if ($self->DefFull) {
-    return $self->full_compare(@_);
-  } else {
-    return $self->simple_compare(@_);
-  }
-}
-
 =head2 simple_compare \@ARR1, \@ARR2
 
 Compare the values in two arrays and return a flag indicating whether or
@@ -324,56 +415,6 @@ Returns true if the arrays are the same or false if they differ.
 
 Uses the values of 'Sep', 'WhiteSpace' and 'Skip' to influence
 the comparison.
-
-=cut
-
-sub simple_compare {
-  my $self = shift;
-
-  $self->_check_args(@_);
-
-  my ($row1, $row2) = @_;
-
-  # No point in continuing if the number of elements is different.
-  return unless $self->compare_len(@_);
-
-  # @check contains the indexes into the two arrays, i.e. the numbers
-  # from 0 to one less than the number of elements.
-  my @check = 0 .. $#$row1;
-
-  my ($pkg, $caller) = (caller(1))[0, 3];
-  $caller = '' unless defined $caller;
-  my $perm = $caller eq __PACKAGE__ . "::perm";
-
-  # Filter @check so it only contains indexes that should be compared.
-  # N.B. Makes no sense to do this if we are called from 'perm'.
-  unless ($perm) {
-    @check = grep {!(exists $self->Skip->{$_} && $self->Skip->{$_}) } @check
-      if keys %{$self->Skip};
-  }
-
-  # Build two strings by taking array slices containing only the columns
-  # that we shouldn't skip and joining those array slices using the Sep
-  # character. Hopefully we can then just do a string comparison.
-  # Note: this makes the function liable to errors if your arrays
-  # contain the separator character.
-  my $str1 = join($self->Sep, map { defined $_ ? $_ : '' } @{$row1}[@check]);
-  my $str2 = join($self->Sep, map { defined $_ ? $_ : '' } @{$row2}[@check]);
-
-  # If whitespace isn't significant, collapse it
-  unless ($self->WhiteSpace) {
-    $str1 =~ s/\s+/ /g;
-    $str2 =~ s/\s+/ /g;
-  }
-
-  # If case isn't significant, change to lower case
-  unless ($self->Case) {
-    $str1 = lc $str1;
-    $str2 = lc $str2;
-  }
-
-  return $str1 eq $str2;
-}
 
 =head2 full_compare \@ARR1, \@ARR2
 
@@ -392,81 +433,6 @@ not the other (i.e. the indexes from the longer array that are beyond
 the end of the shorter array). This might be a little
 counter-intuitive.
 
-=cut
-
-sub full_compare {
-  my $self = shift;
-
-  $self->_check_args(@_);
-
-  my ($row1, $row2) = @_;
-
-  # No point in continuing if the number of elements is different.
-  # Because of the expected return value from this function we can't
-  # just say 'the arrays are different'. We need to do some work to
-  # calculate a meaningful return value.
-  # If we've been called in array context we return a list containing
-  # the number of the columns that appear in the longer list and aren't
-  # in the shorter list. If we've been called in scalar context we
-  # return the difference in the lengths of the two lists.
-  if ($self->different_len(@_)) {
-    return $self->_different_len_returns(@_);
-  }
-
-  my ($arr1, $arr2) = @_;
-
-  my @diffs = ();
-
-  foreach (0 .. $#{$arr1}) {
-    next if keys %{$self->Skip} && $self->Skip->{$_};
-
-    my ($val1, $val2) = ($arr1->[$_], $arr2->[$_]);
-
-    if (not defined $val1 or not defined $val2) {
-      push @diffs, $_ if $self->_defined_diff($val1, $val2);
-      next;
-    }
-
-    unless ($self->WhiteSpace) {
-      $val1 =~ s/\s+/ /g;
-      $val2 =~ s/\s+/ /g;
-    }
-
-    unless ($self->Case) {
-      $val1 = lc $val1;
-      $val2 = lc $val2;
-    }
-
-    push @diffs, $_ unless $val1 eq $val2;
-  }
-
-  return wantarray ? @diffs : scalar @diffs;
-}
-
-sub _different_len_returns {
-  my $self = shift;
-  my ($row1, $row2) = @_;
-
-  if (wantarray) {
-    if ($#{$row1} > $#{$row2}) {
-      return ( $#{$row2} + 1 .. $#{$row1} );
-    } else {
-      return ( $#{$row1} + 1 .. $#{$row2} );
-    }
-  } else {
-    return abs(@{$row1} - @{$row2});
-  }
-}
-
-sub _defined_diff {
-  my $self = shift;
-  my ($val1, $val2) = @_;
-
-  return   if not defined $val1 and not defined $val2;
-  return 1 if     defined $val1 and not defined $val2;
-  return 1 if not defined $val1 and     defined $val2;
-}
-
 =head2 perm \@ARR1, \@ARR2
 
 Check to see if one array is a permutation of the other (i.e. contains
@@ -477,20 +443,9 @@ versions to simple_compare. There are also some small changes to
 simple_compare as it should ignore the Skip hash if we are called from
 perm.
 
-=cut
-
-sub perm {
-  my $self = shift;
-
-  return $self->simple_compare([sort @{$_[0]}], [sort @{$_[1]}]);
-}
-
-1;
-__END__
-
 =head1 AUTHOR
 
-Dave Cross <dave@mag-sol.com>
+Dave Cross E<lt>dave@mag-sol.comE<gt>
 
 =head1 SEE ALSO
 
