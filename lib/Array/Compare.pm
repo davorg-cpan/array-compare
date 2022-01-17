@@ -1,3 +1,4 @@
+use v5.26;
 use Object::Pad;
 
 class Array::Compare {
