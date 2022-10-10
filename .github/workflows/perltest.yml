@@ -28,4 +28,6 @@ jobs:
           perl-version: ${{ matrix.perl }}
       - run: perl -V
       - run: cpanm --installdeps .
-      - run: prove -lv t
+      - run: cpanm Devel::Cover
+      - run: prove --exec 'perl -MDevel::Cover'  -lv t
+      - run: cover
