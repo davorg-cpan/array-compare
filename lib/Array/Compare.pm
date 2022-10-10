@@ -494,7 +494,30 @@ Dave Cross <dave@mag-sol.com>
 
 =head1 SEE ALSO
 
-perl(1).
+L<Array::Diff> - where Array::Compare focusses on whether two
+arrays are different, C<Array::Diff> tells you how they are different.
+
+L<Test::Deep> - functions for comparing arbitrary data structures,
+as part of a testsuite.
+
+L<List::Compare> - similar functionality, but again with more options.
+
+L<Algorithm::Diff> - the underlying implementation of the diff algorithm.
+If you've got L<Algorithm::Diff::XS> installed, that will be used.
+
+L<YAML::Diff> - find difference between two YAML documents.
+
+L<HTML::Differences> - find difference between two HTML documents.
+This uses a more sane approach than L<HTML::Diff>.
+
+L<XML::Diff> - find difference between two XML documents.
+
+L<Hash::Diff> - find the differences between two Perl hashes.
+
+L<Data::Diff> - find difference between two arbitrary data structures.
+
+L<Text::Diff> - can find difference between two inputs, which can be
+data structures or file names.
 
 =head1 COPYRIGHT AND LICENSE
 
