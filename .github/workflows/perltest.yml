@@ -29,5 +29,5 @@ jobs:
       - run: perl -V
       - run: cpanm --installdeps .
       - run: cpanm Devel::Cover
-      - run: prove --exec 'perl -MDevel::Cover'  -lv t
+      - run: prove --exec 'perl -MDevel::Cover -Ilib'  -lv t
       - run: cover
