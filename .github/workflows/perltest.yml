@@ -21,13 +21,24 @@ jobs:
         perl: [ 'latest' ]
     name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up perl
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl }}
       - run: perl -V
       - run: cpanm --installdeps .
-      - run: cpanm Devel::Cover
-      - run: prove --exec 'perl -MDevel::Cover -Ilib'  -lv t
-      - run: cover
+      - run: prove -lv t
+
+  coverage:
+    runs-on: ubuntu-latest
+    container: davorg/perl-coveralls:latest
+    name: Test coverage
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install modules
+        run: cpanm -n --installdeps .
+      - name: Coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cover -test -report Coveralls
