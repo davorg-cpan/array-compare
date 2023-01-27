@@ -1,9 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
@@ -11,34 +7,10 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        perl: [ 'latest' ]
-    name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up perl
-        uses: shogo82148/actions-setup-perl@v1
-        with:
-          perl-version: ${{ matrix.perl }}
-      - run: perl -V
-      - run: cpanm --installdeps .
-      - run: prove -lv t
+    uses: davorg/github-worksflows/.github/workflows/cpan-test.yml
 
   coverage:
-    runs-on: ubuntu-latest
-    container: davorg/perl-coveralls:latest
-    name: Test coverage
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install modules
-        run: cpanm -n --installdeps .
-      - name: Coverage
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: cover -test -report Coveralls
+    uses: davorg/github-worksflows/.github/workflows/cpan-coverage.yml
+
