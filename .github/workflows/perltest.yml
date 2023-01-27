@@ -9,8 +9,8 @@ on:
 
 jobs:
   build:
-    uses: davorg/github-worksflows/.github/workflows/cpan-test.yml@main
+    uses: davorg/github-workflows/.github/workflows/cpan-test.yml@main
 
   coverage:
-    uses: davorg/github-worksflows/.github/workflows/cpan-coverage.yml@main
+    uses: davorg/github-workflows/.github/workflows/cpan-coverage.yml@main
 
