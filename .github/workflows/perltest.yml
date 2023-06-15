@@ -15,5 +15,5 @@ jobs:
     uses: davorg/github_workflows/.github/workflows/cpan-coverage.yml@main
 
   perlcritic:
-    uses: davorg/github_workflows/.github/workflows/perl-critic.yml@b07f30449e957b07b6fb044c5331173811a7e607
+    uses: davorg/github_workflows/.github/workflows/perl-critic.yml@ece74cfb82656b63e6918a8b2d1c85d376dade0c
 
