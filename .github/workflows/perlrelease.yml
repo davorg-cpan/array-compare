@@ -1,0 +1,9 @@
+name: CPAN Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_release:
+    uses: davorg/github_workflows/.github/workflows/cpan-release.yml@main
+
