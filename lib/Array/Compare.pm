@@ -1,5 +1,5 @@
-use v5.26;
-use Object::Pad;
+# use v5.26;
+use Feature::Compat::Class;
 
 class Array::Compare {
 
@@ -7,11 +7,17 @@ class Array::Compare {
 
   use Carp;
 
-  has $Sep        :param :accessor = '^G';
-  has $WhiteSpace :param :accessor = 1;
-  has $Case       :param :accessor = 1;
-  has $DefFull    :param :accessor = 0;
-  has $Skip       :param :accessor = {};
+  field $Sep        :param = '^G';
+  field $WhiteSpace :param = 1;
+  field $Case       :param = 1;
+  field $DefFull    :param = 0;
+  field $Skip       :param = {};
+
+  method Sep        { @_ and $Sep        = shift; $Sep }
+  method WhiteSpace { @_ and $WhiteSpace = shift; $WhiteSpace }
+  method Case       { @_ and $Case       = shift; $Case }
+  method DefFull    { @_ and $DefFull    = shift; $DefFull }
+  method Skip       { @_ and $Skip       = shift; $Skip }
 
   method NoSkip {
     $Skip = {};
