@@ -6,8 +6,8 @@ my $build = Module::Build->new(
     requires => {
         perl            => '5.10.0',
         Carp            => 0,
-        Moo             => 0,
-        Types::Standard => 0,
+        Feature::Compat::Class => 0,
+        ($] < 5.038 ? (Object::Pad => 0) : ()),
     },
     build_requires => {
         Test::NoWarnings => 0,
