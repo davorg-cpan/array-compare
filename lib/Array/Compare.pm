@@ -6,6 +6,8 @@ class Array::Compare {
 
   use Carp;
 
+  $VERSION = '4.0.0';
+
   field $Sep        :param = '^G';
   field $WhiteSpace :param = 1;
   field $Case       :param = 1;

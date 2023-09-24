@@ -1,3 +1,7 @@
+4.0.0 2023-09-24
+
+ - Switched to using Feature::Compat::Class.
+
 3.0.9
 
  - Added a bunch of relevant modules to SEE ALSO.
