@@ -1,4 +1,3 @@
-# use v5.26;
 use Feature::Compat::Class;
 
 class Array::Compare {
