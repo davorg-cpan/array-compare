@@ -2,11 +2,9 @@ use Feature::Compat::Class;
 
 class Array::Compare {
 
-  our ($VERSION, $AUTOLOAD);
+  our $VERSION = '4.0.0.';
 
   use Carp;
-
-  $VERSION = '4.0.0';
 
   field $Sep        :param = '^G';
   field $WhiteSpace :param = 1;

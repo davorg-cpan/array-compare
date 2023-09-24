@@ -1,6 +1,7 @@
 use Module::Build;
 my $build = Module::Build->new(
     module_name => 'Array::Compare',
+    dist_version => '4.0.0',
     license => 'perl',
     requires => {
         perl            => '5.10.0',
