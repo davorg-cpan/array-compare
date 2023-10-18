@@ -1,5 +1,5 @@
 use 5.20.0;
-use experimental 'signatures';
+use feature 'signatures';
 
 use Feature::Compat::Class;
 
