@@ -1,4 +1,4 @@
-use 5.20.0;
+use 5.26.0;
 use feature 'signatures';
 
 use Feature::Compat::Class;
