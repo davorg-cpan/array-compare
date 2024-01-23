@@ -21,11 +21,11 @@ my $build = Module::Build->new(
         resources  => {
             repository => {
                 type => 'git',
-                url  => 'https://github.com/davorg/array-compare.git',
-                web  => 'https://github.com/davorg/array-compare',
+                url  => 'https://github.com/davorg-cpan/array-compare.git',
+                web  => 'https://github.com/davorg-cpan/array-compare',
             },
             bugtracker => {
-                web  => 'https://github.com/davorg/array-compare/issues',
+                web  => 'https://github.com/davorg-cpan/array-compare/issues',
             },
         },
     },
