@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     uses: PerlToolsTeam/github_workflows/.github/workflows/cpan-test.yml@main
+    with:
+      perl_version: "['5.26', '5.28', '5.30', '5.32', '5.34', '5.36', '5.38', '5.40', '5.42']"
 
   coverage:
     uses: PerlToolsTeam/github_workflows/.github/workflows/cpan-coverage.yml@main
